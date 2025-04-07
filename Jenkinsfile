@@ -20,8 +20,8 @@ node {
     // withEnv(["COMMIT=${scmVars.GIT_COMMIT}","BRANCH=${scmVars.GIT_BRANCH}"]) {    
         // load Jenkinsfile Pipeline file from devops repository     
     sh "env | sort"
-    // https://stackoverflow.com/a/56151318
-    if ( !currentBuild.getBuildCauses('jenkins.branch.BranchEventCause') ){
+
+    if ( currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause') || currentBuild.getBuildCauses('org.jenkinsci.plugins.parameterizedscheduler.ParameterizedTimerTriggerCause') ){
         load "${params.JENKINS_FILE}" 
     }
 
