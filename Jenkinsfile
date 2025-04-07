@@ -7,7 +7,7 @@ properties([
     ]),
     pipelineTriggers([
         parameterizedCron('''
-            H */2 * * * * %JENKINS_FILE=pipelines/Jenkinsfile.1
+            */2 * * * * % JENKINS_FILE=pipelines/Jenkinsfile.1
         ''')
     ])
 ])
@@ -20,7 +20,6 @@ node {
     // withEnv(["COMMIT=${scmVars.GIT_COMMIT}","BRANCH=${scmVars.GIT_BRANCH}"]) {    
         // load Jenkinsfile Pipeline file from devops repository     
     sh "env | sort"
-    echo currentBuild.getBuildCauses
     // https://stackoverflow.com/a/56151318
     if ( !currentBuild.getBuildCauses('jenkins.branch.BranchEventCause') ){
         load "${params.JENKINS_FILE}" 
