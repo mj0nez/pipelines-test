@@ -1,7 +1,14 @@
+// on basis of https://github.com/muratdemiray/jenkins-pipeline-load-generic/tree/main
+
 // Parameters for the build
 properties([
     parameters([
         string(name: 'JENKINS_FILE'),
+    ]),
+    pipelineTriggers([
+        parameterizedCron('''
+            H */2 * * * * %JENKINS_FILE=pipelines/Jenkinsfile.1
+        ''')
     ])
 ])
 
@@ -13,8 +20,9 @@ node {
     // withEnv(["COMMIT=${scmVars.GIT_COMMIT}","BRANCH=${scmVars.GIT_BRANCH}"]) {    
         // load Jenkinsfile Pipeline file from devops repository     
     sh "env | sort"
-
-    if ( currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause') ){
+    echo currentBuild.getBuildCauses
+    // https://stackoverflow.com/a/56151318
+    if ( !currentBuild.getBuildCauses('jenkins.branch.BranchEventCause') ){
         load "${params.JENKINS_FILE}" 
     }
 
