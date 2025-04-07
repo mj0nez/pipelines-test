@@ -6,9 +6,9 @@ properties([
         string(name: 'JENKINS_FILE'),
     ]),
     pipelineTriggers([
-        parameterizedCron('''
-            */2 * * * * % JENKINS_FILE=pipelines/Jenkinsfile.1
-        ''')
+        // parameterizedCron("""
+        //     */2 * * * * % JENKINS_FILE=pipelines/Jenkinsfile.1
+        // """)
     ])
 ])
 
