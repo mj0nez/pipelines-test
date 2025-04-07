@@ -13,6 +13,10 @@ node {
     // withEnv(["COMMIT=${scmVars.GIT_COMMIT}","BRANCH=${scmVars.GIT_BRANCH}"]) {    
         // load Jenkinsfile Pipeline file from devops repository     
     sh "env | sort"
-    load "${params.JENKINS_FILE}" 
+
+    if ( currentBuild.rawBuild.getCauses()[0].toString().contains('UserIdCause') ){
+        load "${params.JENKINS_FILE}" 
+    }
+
     // }
 }
