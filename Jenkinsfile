@@ -14,7 +14,7 @@ node {
         // load Jenkinsfile Pipeline file from devops repository     
     sh "env | sort"
 
-    if ( currentBuild.rawBuild.getCauses()[0].toString().contains('UserIdCause') ){
+    if ( currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause') ){
         load "${params.JENKINS_FILE}" 
     }
 
