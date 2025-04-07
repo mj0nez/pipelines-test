@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    options {
+        buildDiscarder(
+            logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10')
+        )
+        disableConcurrentBuilds()
+        timeout(time: 300, unit: "SECONDS")
+    }
+    stages {
+        stage('Test') {
+            steps {
+                sh """
+                echo "test 1"
+                """
+            }
+        }
+    }
+    post {
+        // Clean after build
+        always {
+            cleanWs()
+        }
+    }
+}
